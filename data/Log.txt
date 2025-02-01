@@ -1,0 +1,13 @@
+Output File: \Users\smchi\Sync\data\8waytest.txt
+	LinkType: 3
+	NetworkType: 3
+	Parameters:
+		S[0]: 5.000000
+		GAMMA: 0.200000
+		DELTA_TIME: 0.010000
+		EPSILON: 0.030000
+		NUM_OSC: 36
+		WIDTH: 6
+		HEIGHT: 6
+		SIM_TIME: 10000
+Date: 2025-01-27 20:43:09
