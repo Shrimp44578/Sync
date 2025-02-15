@@ -1,5 +1,7 @@
+// Amount of time to run simulation
+#define RUN_TIME 100
 // SIM_TIME is the number of iterations to run the simulation
-#define SIM_TIME 10000
+#define SIM_TIME RUN_TIME/DELTA_TIME
 // NUM_OSC is the number of oscillators in the simulation
 #define NUM_OSC  36
 // WIDTH is the number of oscillators in a row in the simulation
