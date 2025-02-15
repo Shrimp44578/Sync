@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 
     // Get the output file name from the user
     char outputFileName[256];
-    char directory[256] = "..\\data\\";
+    char directory[256] = "..//data//";
     printf("Enter the output file name: ");
     scanf("%s", outputFileName);
     char *outputFileName1 = strcat(directory, outputFileName);
