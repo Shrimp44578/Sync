@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 void PrintLog(char outputFileName1[], int LinkType, int NetworkType, double S[]) {
-    FILE* LogFile = fopen(".//data//Log.txt", "a");
+    FILE* LogFile = fopen("..//data//Log.txt", "a");
     if (LogFile == NULL) {
         printf("Error opening Log file!\n");
         return;

@@ -1,4 +1,6 @@
 #include "SyncConstants.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 void FourWay2dLinkage(double x[], int i) {          
     // Find the row and column of the osc
