@@ -14,6 +14,8 @@
 #define DELTA_TIME 0.01
 // EPSILON is a small value used in the simulation
 #define EPSILON 0.03
+// INIT_VAR is the initial constraint value
+#define INIT_VAR 1
 
 // Define a macro to find the minimum of two values
 #define min(a,b) (((a) < (b)) ? (a) : (b))

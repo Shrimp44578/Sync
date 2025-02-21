@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     // Initialize the values of the oscillators to random values between 0 and 1
     for (int i = 0; i < NUM_OSC; i++) {
         x[i] = (double)rand() / RAND_MAX;
-        x[i] *= 0.2;
+        x[i] *= INIT_VAR;
     }
 
     // Get the output file name from the user
