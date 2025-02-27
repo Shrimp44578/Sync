@@ -63,3 +63,44 @@ Output File: ..//data//stdev.txt
 		HEIGHT: 6
 		SIM_TIME: 10000.000000
 Date: 2025-02-20 21:26:33
+Output File: ..//data//testsouf.txt
+	LinkType: 2
+	NetworkType: 1
+	Parameters:
+		S[0]: 5.000000
+		GAMMA: 0.200000
+		DELTA_TIME: 0.010000
+		EPSILON: 0.030000
+		NUM_OSC: 36
+		WIDTH: 6
+		HEIGHT: 6
+		SIM_TIME: 10000.000000
+Date: 2025-02-24 18:25:53
+
+Output File: .//data//projectdata_1o2.txt
+	LinkType: 2
+	NetworkType: 1
+	Parameters:
+		S[0]: 0.000000
+		GAMMA: 0.200000
+		DELTA_TIME: 0.001000
+		EPSILON: 0.030000
+		NUM_OSC: 36
+		WIDTH: 6
+		HEIGHT: 6
+		SIM_TIME: 10000.000000
+Date: 2025-02-25 17:03:00
+
+Output File: .//data//projectdata_1o5.txt
+	LinkType: 2
+	NetworkType: 1
+	Parameters:
+		S[0]: 0.000000
+		GAMMA: 0.500000
+		DELTA_TIME: 0.001000
+		EPSILON: 0.030000
+		NUM_OSC: 36
+		WIDTH: 6
+		HEIGHT: 6
+		SIM_TIME: 50000.000000
+Date: 2025-02-25 17:17:06

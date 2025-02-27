@@ -18,7 +18,6 @@ int main(int argc, char *argv[]) {
     change is the change in the oscillator value based on the baseline rate of change and the current value
     */
     double S[1];
-    S[0] = 5;
     double dist;
     double x[NUM_OSC];
     double change;
@@ -47,7 +46,7 @@ int main(int argc, char *argv[]) {
 
     // Get the output file name from the user
     char outputFileName[256];
-    char directory[256] = "..//data//";
+    char directory[256] = ".//data//";
     printf("Enter the output file name: ");
     scanf("%s", outputFileName);
     char *outputFileName1 = strcat(directory, outputFileName);
@@ -71,7 +70,7 @@ int main(int argc, char *argv[]) {
     for (int b = 0; b < SIM_TIME; b++) {
         // Update the value of each oscillator based on the baseline rate of change and the current value
         for (int i = 0; i < NUM_OSC; i++) {
-            change = S[0] - GAMMA * x[i];
+            change = S0 - GAMMA * x[i];
             dist = change * DELTA_TIME;
             x[i] += dist;
             // If the oscillator value exceeds 1, update the values of all other oscillators
