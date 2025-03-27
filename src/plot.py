@@ -1,0 +1,130 @@
+"""
+This module reads the text files containing the simulation data and plots the data.
+The plots are saved as HTML files in the graphs directory.
+"""
+
+import glob
+import os
+import re
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+import numpy as np
+
+# Read the text file into a DataFrame, using the first row as column names
+FILE_PATH = r"/home/pine/Code/Sync/data"
+groupFiles = glob.glob(FILE_PATH + "/projectdata_2*.txt")
+for file in groupFiles:
+    # Regular expression to extract x, y, and z
+    match = re.search(
+        r"/home/pine/Code/Sync/data/projectdata_(\d+)o(\d+)e(\d+)\.txt", file
+    )
+
+    if match:
+        s0 = int(match.group(1))
+        gamma = int(match.group(2)) * 0.1
+        epsilon = int(match.group(3))
+        print(f"S0: {s0}, Gamma: {gamma}, Epsilon: {epsilon}")
+    else:
+        print("Filename format does not match.")
+    df = pd.read_csv(file, delim_whitespace=True, header=0)
+    # Count the number of oscillators above threshold
+    aboveThreshold = df >= 1.0
+    counts = aboveThreshold.sum(axis=1)
+    fig3_x = df.columns
+    row1 = df.loc[45000]
+    row2 = df.loc[10000]
+    row3 = df.loc[1000]
+
+    # Calculate intrinsic period
+    intrinsicPeriod = np.log(s0 / (s0 - gamma))
+    intrinsicPeriod *= 1 / gamma
+
+    # Create a time column
+    df["Time"] = df.index / 100.0  # Assuming data is in 100 Hz
+
+    # Melt the DataFrame to have a long format for plotting
+    df_melted = df.melt(id_vars=["Time"], var_name="Oscillator", VALue_name="Voltage")
+
+    # Plot the oscillator voltage vs. time
+    fig = px.line(
+        df_melted,
+        x="Time",
+        y="Voltage",
+        color="Oscillator",
+        title="Oscillator Voltage vs Time",
+    )
+
+    # Plot the number of oscillators above threshold
+    fig2 = px.bar(counts, title="Number of Oscillators above Threshold")
+
+    # Plot the voltage of three oscillators vs. time
+    fig3 = go.Figure()
+    fig3.add_trace(go.Scatter(x=fig3_x, y=row1, mode="lines", name="Oscillator 1"))
+    fig3.add_trace(go.Scatter(x=fig3_x, y=row2, mode="lines", name="Oscillator 2"))
+    fig3.add_trace(go.Scatter(x=fig3_x, y=row3, mode="lines", name="Oscillator 3"))
+
+    # Calculate the average of the differences in firing times inside the moving intrinsic period
+    windowSize = int(
+        intrinsicPeriod * 1000
+    )  # Convert intrinsic period to number of samples (assuming 100 Hz)
+    averageDifferences = []
+    timePeriods = []
+
+    i = 0
+    k = 0
+    averageValue = []
+    averageIndex = []
+    standardDeviation = []
+    INITIAL_SKIP = 1
+
+    while i < (49900 - windowSize):
+        INITIAL_SKIP = 0
+        WINDOW_START = i
+        windowEnd = WINDOW_START + windowSize
+        j = WINDOW_START
+        VAL = 0
+        NUM = 0
+        VAL_SQUARED = 0
+        while j < windowEnd:
+            VAL += counts.iloc[j] * (j - WINDOW_START)
+            VAL_SQUARED += counts.iloc[j] * (j - WINDOW_START) * (j - WINDOW_START)
+            NUM += counts.iloc[j]
+            j += 1
+        mean = VAL / NUM
+        variance = (VAL_SQUARED - (2 * mean * VAL) + (NUM * (mean * mean))) / NUM
+        stdDev = np.sqrt((variance))
+        averageValue.append(mean)
+        standardDeviation.append(stdDev)
+        averageIndex.append(k)
+        k += 1
+        i += windowSize
+    # Create a DataFrame for the average differences and their corresponding time periods
+
+    # Plot the average differences vs. time periods
+    fig4 = go.Figure()
+    fig4.add_trace(
+        go.Scatter(x=averageIndex, y=averageValue, mode="lines", name="Mean")
+    )
+
+    fig5 = go.Figure()
+    fig5.add_trace(
+        go.Scatter(
+            x=averageIndex, y=standardDeviation, mode="lines", name="Standard Deviation"
+        )
+    )
+
+    fileName = os.path.basename(file)
+    graphLocation = "./graphs/" + fileName.replace(".txt", "")
+
+    fig.update_layout(width=24 * 37.7953, height=20 * 37.7953, font=dict(size=30))
+    fig2.update_layout(width=24 * 37.7953, height=20 * 37.7953, font=dict(size=30))
+    fig3.update_layout(width=24 * 37.7953, height=20 * 37.7953, font=dict(size=30))
+    fig4.update_layout(width=24 * 37.7953, height=20 * 37.7953, font=dict(size=30))
+    fig5.update_layout(width=24 * 37.7953, height=20 * 37.7953, font=dict(size=30))
+
+    fig5.write_html(graphLocation + "_stdDev.html")
+    fig4.write_html(graphLocation + "_mean.html")
+    fig3.write_html(graphLocation + "_oscillator.html")
+    fig2.write_html(graphLocation + "_threshold.html")
+    fig.write_html(graphLocation + "_voltage.html")
