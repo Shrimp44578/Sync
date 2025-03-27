@@ -11,13 +11,16 @@ import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
 
-# Read the text file into a DataFrame, using the first row as column names
+# Define the file path containing the data
 FILE_PATH = r"/home/pine/Code/Sync/data"
-groupFiles = glob.glob(FILE_PATH + "/projectdata_2*.txt")
-for file in groupFiles:
-    # Regular expression to extract x, y, and z
+
+# Find all files matching the pattern "projectdata_2*.txt"
+group_files = glob.glob(os.path.join(FILE_PATH, "projectdata_2*.txt"))
+
+for file in group_files:
+    # Extract x, y, and z values from the filename using a regular expression
     match = re.search(
-        r"/home/pine/Code/Sync/data/projectdata_(\d+)o(\d+)e(\d+)\.txt", file
+        r"projectdata_(\d+)o(\d+)e(\d+)\.txt", file
     )
 
     if match:
@@ -26,11 +29,17 @@ for file in groupFiles:
         epsilon = int(match.group(3))
         print(f"S0: {s0}, Gamma: {gamma}, Epsilon: {epsilon}")
     else:
-        print("Filename format does not match.")
+        print(f"Filename format does not match for file: {file}")
+        continue
+
+    # Read the text file into a DataFrame
     df = pd.read_csv(file, delim_whitespace=True, header=0)
-    # Count the number of oscillators above threshold
-    aboveThreshold = df >= 1.0
-    counts = aboveThreshold.sum(axis=1)
+
+    # Count the number of oscillators above the threshold
+    above_threshold = df >= 1.0
+    counts = above_threshold.sum(axis=1)
+
+    # Extract column names for plotting
     fig3_x = df.columns
     row1 = df.loc[45000]
     row2 = df.loc[10000]
