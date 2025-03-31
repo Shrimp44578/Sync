@@ -1,3 +1,5 @@
 # ignores vscode settings
-.vscode/
-.venv/
+*.exe
+*.html
+*.txt
+./bin/Sync
