@@ -15,12 +15,12 @@ import numpy as np
 FILE_PATH = r"/home/pine/Code/Sync/data"
 
 # Find all files matching the pattern "projectdata_2*.txt"
-group_files = glob.glob(os.path.join(FILE_PATH, "projectdata_2*.txt"))
+group_files = glob.glob(os.path.join(FILE_PATH, "projectdata_1o9*.txt"))
 
 for file in group_files:
     # Extract x, y, and z values from the filename using a regular expression
     match = re.search(
-        r"projectdata_(\d+)o(\d+)e(\d+)\.txt", file
+        r"projectdata_(\d+)o(\d+)e(\d+)l(\d+)n(\d+)\.txt", file
     )
 
     if match:
@@ -53,7 +53,7 @@ for file in group_files:
     df["Time"] = df.index / 100.0  # Assuming data is in 100 Hz
 
     # Melt the DataFrame to have a long format for plotting
-    df_melted = df.melt(id_vars=["Time"], var_name="Oscillator", VALue_name="Voltage")
+    df_melted = df.melt(id_vars=["Time"], var_name="Oscillator", value_name="Voltage")
 
     # Plot the oscillator voltage vs. time
     fig = px.line(
@@ -87,7 +87,7 @@ for file in group_files:
     standardDeviation = []
     INITIAL_SKIP = 1
 
-    while i < (49900 - windowSize):
+    while i < (50000 - windowSize):
         INITIAL_SKIP = 0
         WINDOW_START = i
         windowEnd = WINDOW_START + windowSize

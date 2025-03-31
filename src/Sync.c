@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include "Sync.h"
 #include "SyncConstants.h"
+
 extern char *optarg;
 extern int optind, opterr, optopt;
 
@@ -28,30 +29,31 @@ int main(int argc, char *argv[]) {
     double change;
     int LinkType = 1;
     int NetworkType = 1;
-    char outputFileName[256];
-    char directory[256] = "data/";
     int newUpdate;
     int updateDone[NUM_OSC];
+    int opt;
+    char outputFileName[256];
+    char directory[256] = "data/";
+
+
 
     #ifdef DEBUG
-    
-    // Get the LinkType and NetworkType from the user
-    printf("Enter the LinkType\n");
-    printf("Select 1 For Global Linkage\n");
-    printf("Select 2 For Four Way Linkage\n");
-    printf("Select 3 For Eight Way Linkage\n");
-    scanf("%d", &LinkType);
-    
-    if (LinkType != 1) {
-        printf("Enter the NetworkType\n");
-        printf("Select 1 For Taurus Network\n");
-        printf("Select 2 For Cylindrical Network\n");
-        printf("Select 3 For 2d Network\n");
-        scanf("%d", &NetworkType);
-    }
+        // Get the LinkType and NetworkType from the user
+        printf("Enter the LinkType\n");
+        printf("Select 1 For Global Linkage\n");
+        printf("Select 2 For Four Way Linkage\n");
+        printf("Select 3 For Eight Way Linkage\n");
+        scanf("%d", &LinkType);
+        
+        if (LinkType != 1) {
+            printf("Enter the NetworkType\n");
+            printf("Select 1 For Taurus Network\n");
+            printf("Select 2 For Cylindrical Network\n");
+            printf("Select 3 For 2d Network\n");
+            scanf("%d", &NetworkType);
+        }
     #endif
-    
-    int opt;
+
 
     while((opt = getopt(argc, argv, ":f:s:g:e:l:n:")) != -1)  
     {  
@@ -83,6 +85,7 @@ int main(int argc, char *argv[]) {
                 break;  
         }  
     }  
+    
     // Initialize the values of the oscillators to random values between 0 and 1
     for (int i = 0; i < NUM_OSC; i++) {
         x[i] = (double)rand() / RAND_MAX;
@@ -91,9 +94,10 @@ int main(int argc, char *argv[]) {
 
     // Get the output file name from the user
     #ifdef DEBUG
-    printf("Enter the output file name: ");
-    scanf("%s", outputFileName);
+        printf("Enter the output file name: ");
+        scanf("%s", outputFileName);
     #endif
+    
     char *outputFileName1 = strcat(directory, outputFileName); 
     
     // Open the output file for writing

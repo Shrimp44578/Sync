@@ -3,9 +3,9 @@
 // SIM_TIME is the number of iterations to run the simulation
 #define SIM_TIME RUN_TIME/DELTA_TIME
 // NUM_OSC is the number of oscillators in the simulation
-#define NUM_OSC  256
+#define NUM_OSC  64
 // WIDTH is the number of oscillators in a row in the simulation
-#define WIDTH 16
+#define WIDTH 8
 // HEIGHT is the number of rows in the simulation
 #define HEIGHT NUM_OSC/WIDTH
 // GAMMA is a constant used in the simulation
