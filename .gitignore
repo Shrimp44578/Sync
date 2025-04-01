@@ -3,3 +3,6 @@
 *.html
 *.txt
 ./bin/Sync
+*.o
+*.so
+bin/Sync
