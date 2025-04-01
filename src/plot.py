@@ -15,7 +15,7 @@ import numpy as np
 FILE_PATH = r"/home/pine/Code/Sync/data"
 
 # Find all files matching the pattern "projectdata_2*.txt"
-group_files = glob.glob(os.path.join(FILE_PATH, "projectdata_1o9*.txt"))
+group_files = glob.glob(os.path.join(FILE_PATH, "projectdata_2o7e3l2n3.txt"))
 
 for file in group_files:
     # Extract x, y, and z values from the filename using a regular expression
@@ -34,6 +34,9 @@ for file in group_files:
 
     # Read the text file into a DataFrame
     df = pd.read_csv(file, delim_whitespace=True, header=0)
+
+    num_rows = df.shape[0]
+    num_cols = df.shape[1]
 
     # Count the number of oscillators above the threshold
     above_threshold = df >= 1.0
@@ -87,7 +90,7 @@ for file in group_files:
     standardDeviation = []
     INITIAL_SKIP = 1
 
-    while i < (50000 - windowSize):
+    while i < (num_rows - windowSize):
         INITIAL_SKIP = 0
         WINDOW_START = i
         windowEnd = WINDOW_START + windowSize
@@ -100,6 +103,8 @@ for file in group_files:
             VAL_SQUARED += counts.iloc[j] * (j - WINDOW_START) * (j - WINDOW_START)
             NUM += counts.iloc[j]
             j += 1
+            if NUM == num_cols:
+                break
         mean = VAL / NUM
         variance = (VAL_SQUARED - (2 * mean * VAL) + (NUM * (mean * mean))) / NUM
         stdDev = np.sqrt((variance))
