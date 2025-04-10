@@ -5,7 +5,7 @@ SRC = ./src/Sync.c ./src/PrintFunctions.c ./src/SyncNetwork.c
 OBJ = $(SRC:./src/%.c=./obj/%.o)  # Convert .c files to .o files
 BIN = ./bin/Sync
 LIB_SRC = ./src/get_defines.c  # Source file for the shared library
-LIB_SO = ./lib/libexample.so      # Target location for the shared library
+LIB_SO = ./lib/libdefines.so      # Target location for the shared library
 
 # Default target
 all: $(BIN) $(LIB_SO)

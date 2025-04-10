@@ -14519,3 +14519,18 @@ Output File: data/projectdata_1o9e10l2n1.txt
 		SIM_TIME: 75000.000000
 		Intrinsic Period: 2.558428
 Date: 2025-03-30 19:53:24
+
+Output File: data/projectdata_2o1e10l2n1.txtnew
+	LinkType: 2
+	NetworkType: 1
+	Parameters:
+		S[0]: 2.000000
+		GAMMA: 0.100000
+		DELTA_TIME: 0.001000
+		EPSILON: 0.100000
+		NUM_OSC: 64
+		WIDTH: 8
+		HEIGHT: 8
+		SIM_TIME: 75000.000000
+		Intrinsic Period: 0.512933
+Date: 2025-04-01 19:31:14

@@ -5,7 +5,7 @@ Finds the number of groups of oscillators at the very last time period of the si
 import os
 import glob as gl
 import math as ma
-import re
+import re               g\  
 import ctypes as ct
 import pandas as pd
 import numpy as np
@@ -23,12 +23,12 @@ delta_time = lib.get_delta_time()
 
 # Define constants and file paths
 DIRECTORY = "/home/pine/Code/Sync/data"
-FILE = "projectdata_20o7e*l2n1.txt"
+FILE = "projectdata_*o9e10l2n1.txt"
 FILE_PATH = gl.glob(os.path.join(DIRECTORY, FILE))
 
 # Initialize variables
 NUM_FILES = 0
-results_df = pd.DataFrame(columns=["Epsilon", "NUM_GROUPS"])
+results_df = pd.DataFrame(columns=["S0", "NUM_GROUPS"])
 
 # Process each file in the directory
 for file in FILE_PATH:
@@ -102,7 +102,7 @@ for file in FILE_PATH:
         i += 1
 
     # Store results in the DataFrame
-    results_df.loc[len(results_df)] = {"Epsilon": epsilon, "NUM_GROUPS": NUM_GROUPS}
+    results_df.loc[len(results_df)] = {"S0": s0, "NUM_GROUPS": NUM_GROUPS}
     NUM_FILES += 1
 
 # Set Seaborn style and font size
@@ -111,24 +111,24 @@ sns.set_context("notebook", font_scale=1.6)  # Font size 16
 
 # Create the plot
 plt.figure(figsize=(5, 3.75))  # Set figure size to 5x3.75 inches
-sns.lineplot(data=results_df, x="Epsilon", y="NUM_GROUPS", marker="o", color="b")
+sns.lineplot(data=results_df, x="S0", y="NUM_GROUPS", marker="o", color="b")
 
 # Add titles and labels
-plt.title("Number of Groups vs Epsilon", fontsize=16)
-plt.xlabel("Epsilon", fontsize=16)
+plt.title("Number of Groups vs S0", fontsize=16)
+plt.xlabel("S0", fontsize=16)
 plt.ylabel("Number of Groups", fontsize=16)
 
 # Set axes to start at 0
-# Extend x-axis slightly beyond max Epsilon
-plt.xlim(left=0, right=results_df["Epsilon"].max() + 0.01)
+# Extend x-axis slightly beyond max S0
+plt.xlim(left=0, right=results_df["S0"].max() + 2)
 # Extend y-axis slightly beyond max NUM_GROUPS
 plt.ylim(bottom=0, top=results_df["NUM_GROUPS"].max() + 1)
 
 # Set x-axis ticks to increment by 0.01
-plt.xticks(np.arange(0, results_df["Epsilon"].max() + 0.02, 0.02))
+plt.xticks(np.arange(0, results_df["S0"].max() + 2, 2))
 
 # Set y-axis ticks to increment by 1
-plt.yticks(range(0, int(results_df["NUM_GROUPS"].max()) + 2, 1))
+plt.yticks(range(0, int(results_df["NUM_GROUPS"].max()) + 2, 2))
 
 # Show the plot
 plt.tight_layout()  # Adjust layout to fit everything nicely
